@@ -5,6 +5,7 @@ btn.addEventListener('click', short)
 async function short() {
 
     var longURL = document.getElementById('longUrl').value
+    if(!longURL) return
 
     if (longURL.indexOf('https://') === -1) {
         longURL = 'https://' + longURL
@@ -25,9 +26,13 @@ async function short() {
         })
     });
 
-    const data = await result.json(); // Extract JSON response
-
     var shortUrl = document.getElementById('shortUrl')
-    shortUrl.value = data.link
+
+    if (result.ok) {
+        const data = await result.json();
+        shortUrl.value = data.link; // Set the shortened URL
+    } else {
+        alert("You have inserted an Invalid URL")
+    }
 
 }
